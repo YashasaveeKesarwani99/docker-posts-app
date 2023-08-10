@@ -13,6 +13,9 @@ services:
 
   mongo:
     image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=yashasavee
+      - MONGO_INITDB_ROOT_PASSWORD=yaash2522
     ports:
       - "27017:27017"
     networks:

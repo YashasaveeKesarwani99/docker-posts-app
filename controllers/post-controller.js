@@ -1,4 +1,4 @@
-const { Post, Post }  = require('../models/post-model')
+const { Post }  = require('../models/post-model')
 
 const getAllPosts = async (req,res,next) => {
     try {
@@ -20,7 +20,7 @@ const getAllPosts = async (req,res,next) => {
 
 const getPostById = async (req,res,next) => {
     try {
-        const post = Post.findById(req.params.id)
+        const post = await Post.findById(req.params.id)
 
         res.status(200).json({
             status: 'success',
@@ -39,7 +39,8 @@ const getPostById = async (req,res,next) => {
 
 const createPost = async (req,res,next) => {
     try {
-        const post = Post.create(req.body)
+        console.log(req.body)
+        const post = await Post.create(req.body)
 
         res.status(200).json({
             status: 'success',
@@ -49,6 +50,7 @@ const createPost = async (req,res,next) => {
         })
 
     } catch(e) {
+        console.log(e)
          res.status(400).json({
             status: 'fail'
          })
@@ -57,7 +59,7 @@ const createPost = async (req,res,next) => {
 
 const updatePost = async (req,res,next) => {
     try {
-        const post = Post.findByIdAndUpdate(req.params.id, req.body, {
+        const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
             runValidators:true,
         })
@@ -96,5 +98,6 @@ module.exports = {
     getAllPosts,
     getPostById,
     createPost,
-    deletePost
+    deletePost,
+    updatePost
 }

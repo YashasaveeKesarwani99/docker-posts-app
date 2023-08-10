@@ -7,5 +7,6 @@ router.get('/', getAllPosts);
 router.get('/:id', getPostById);
 router.post('/', createPost);
 router.patch('/:id', updatePost);
+router.delete('/:d', deletePost)
 
-module.exports = router
+module.exports = router;
