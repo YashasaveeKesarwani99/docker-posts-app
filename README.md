@@ -17,6 +17,6 @@ Backend for crud operations on "posts". Basically, one of my pracitce projects.
 ```
 - for production
 ```bash
-  docker-compose -f docker-compose.dev.yml -f docker-compose.dev.yml down
+  docker-compose -f docker-compose.dev.yml -f docker-compose.prod.yml up -d --build
 
 ```
