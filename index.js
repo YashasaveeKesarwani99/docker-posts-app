@@ -1,14 +1,16 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
-const session = require('express-session')
-const redis = require('redis')
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const redis = require('ioredis');
+const RedisStore = require('connect-redis').default;
 require('dotenv').config();
-const postRouter = require('./routes/post-routes')
-const userRouter = require('./routes/user-routes')
-const { REDIS_URL, REDIS_PORT, SESSION_SECRET } = require('./config/config')
+const postRouter = require('./routes/post-routes');
+const userRouter = require('./routes/user-routes');
+const { REDIS_URL, REDIS_PORT, SESSION_SECRET } = require('./config/config');
 
-let RedisStore = require('connect-redis')(session)
+
+
 let redisClient = redis.createClient({
     host: REDIS_URL,
     port: REDIS_PORT
@@ -24,9 +26,17 @@ app.use(session({
         resave: false,
         saveUinitialized: false,
         httpOnly: true,
-        maxAge: 30000
+        maxAge: 40000
     }
 }))
+
+redisClient.on('error', function(err) {
+    console.log('*Redis Client Error: ' + err.message);
+});
+redisClient.on('connect', function(){
+   console.log('Connected to redis instance');
+});
+
 app.use(bodyParser.json())
 
 const db = mongoose.connect(process.env.MONGO_URI,{

@@ -25,6 +25,8 @@ services:
 
   redis:
     image: redis
+    networks:
+      - my-network
 
 
 volumes:
